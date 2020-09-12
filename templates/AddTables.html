@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="=ie=edge">
@@ -71,6 +72,7 @@ a:hover, a:active {
   background-color: red;
 }
 
+
     </style>
     <!--//Link to an external style sheet:-->
 </head>
@@ -140,13 +142,15 @@ a:hover, a:active {
     <br>
 
 
-    <a href="/result">find out the best arrangement!</a>
+    <a href="/result" onclick="$('#loading').show();">find out the best arrangement!</a>
+    <div id="loading" style="display:none; font-size: 30px"><img  alt="" /> loading......</div>
+
 
 
 </div>
 <div class ="links">
 
-<a href="/ChooseDimensions" >back</a>
+<a href="/ChooseDimensions" onclick="$('#loading').show();">back</a>
 
 
 </div>
