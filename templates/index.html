@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="=ie=edge">
+    <style type="text/css">
+        body, html {
+            height: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .bg-image {
+            /* The image used */
+            background-image: url("../static/palm-beach-restaurant.jpg");
+
+            /* Add the blur effect */
+            filter: blur(8px);
+            -webkit-filter: blur(2px);
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Position text in the middle of the page/image */
+        .bg-text {
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+            color: white;
+            font-weight: bold;
+            border: 3px solid #f1f1f1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        a:link, a:visited {
+            background-color: #f44336;
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: red;
+        }
+
+    </style>
+
+    <title>Welcome to "EAT SAFE"</title>
+
+</head>
+<div class="bg-image"></div>
+<div class="bg-text">
+    <h1>Welcome to "EAT SAFE"</h1>
+    <h1>EAT SAFE is the first ever App for finding the most safe table-arrangement available in your own restaurant</h1>
+    <p style="font-size: 40px">our App will let you insert your tables's shape, your restaurant dimensions, and give you
+        back the best arrangement for your restaurant</p>
+    <h1> lets start!</h1>
+    <a href="/ChooseDimensions">create your restaurant</a>
+</div>
+
+
+</html>

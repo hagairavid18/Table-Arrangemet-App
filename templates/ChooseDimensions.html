@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>choose dimensions</title>
+    <style type="text/css">
+
+        body, html {
+            height: 100%;
+            text-align: center;
+        }
+
+        * {
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .bg-image {
+            /* The image used */
+            background-image: url("../static/palm-beach-restaurant.jpg");
+
+            /* Add the blur effect */
+            filter: blur(8px);
+            -webkit-filter: blur(2px);
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Position text in the middle of the page/image */
+        .bg-text {
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+            color: white;
+            font-weight: bold;
+            border: 3px solid #f1f1f1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            padding: 20px;
+            text-align: center;
+        }
+
+
+        .chess-board {
+            border-spacing: 2px;
+        }
+
+        .chess-board th {
+            padding: .5em;
+            text-align: center;
+        }
+
+        .chess-board td {
+            border: 1px solid;
+            width: 3em;
+            height: 3em;
+            text-align: center;
+        }
+
+        .chess-board .light  {
+            background: #177199;
+        }
+
+        .chess-board .dark {
+            background: #000;
+        }
+        .links{
+            position: absolute;
+            top: 97%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            padding: 20px;
+
+        }
+        .links a:link, .links a:visited {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+             text-decoration: none;
+             display: inline-block;
+        }
+
+.links a:hover,.links a:active {
+  background-color: red;
+}
+
+
+    </style>
+</head>
+<div class="bg-image"></div>
+<div class="bg-text">
+
+<table class="chess-board">
+    <tbody>
+    <form action="{{ url_for('choose_dimensions') }}" method="post">
+    <!-- form on the curr page ('/'), do the method ' 'add_tables post which add row to TO do table  -->
+        <label for="restaurant_width" style="font-size: 30px">choose your restaurant width:</label>
+        <select id="restaurant_width" name="restaurant_width">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+
+        </select>
+        <br>
+        <label for="restaurant_length" style="font-size: 30px">choose restaurant length :</label>
+
+        <select id="restaurant_length" name="restaurant_length">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <br>
+        <h4>*size in meters</h4>
+
+        <input type="submit" value="apply"><!--create a a buton called add task -->
+    </form>
+
+    <h2> your restaurant is not symmetric? just tap on the squares</h2>
+    <tr >
+        <th></th>
+        <th>1.0</th>
+        <th>2.0</th>
+        <th>3.0</th>
+        <th>4.0</th>
+        <th>5.0</th>
+        <th>6.0</th>
+        <th>7.0</th>
+        <th>8.0</th>
+        <th>9.0</th>
+        <th>10.0</th>
+    </tr>
+    <tr>
+        <th>1.0</th>
+        <td class={{colour_matrix[0][0]}}>
+            <a href="update/0000">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][1]}}>
+            <a href="update/0001">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][2]}}>
+            <a href="update/0002">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][3]}}>
+            <a href="update/0003">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][4]}}>
+            <a href="update/0004">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][5]}}>
+            <a href="update/0005">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][6]}}>
+            <a href="update/0006">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][7]}}>
+            <a href="update/0007">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][8]}}>
+            <a href="update/0008">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[0][9]}}>
+            <a href="update/0009">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+
+       </tr>
+    <tr>
+        <th>2.0</th>
+        <td class={{colour_matrix[1][0]}}>
+            <a href="update/0100">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][1]}}>
+            <a href="update/0101">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][2]}}>
+            <a href="update/0102">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][3]}}>
+            <a href="update/0103">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][4]}}>
+            <a href="update/0104">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][5]}}>
+            <a href="update/0105">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][6]}}>
+            <a href="update/0106">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][7]}}>
+            <a href="update/0107">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][8]}}>
+            <a href="update/0108">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[1][9]}}>
+            <a href="update/0109">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>3.0</th>
+        <td class={{colour_matrix[2][0]}}>
+            <a href="update/0200">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][1]}}>
+            <a href="update/0201">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][2]}}>
+            <a href="update/0202">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][3]}}>
+            <a href="update/0203">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][4]}}>
+            <a href="update/0204">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][5]}}>
+            <a href="update/0205">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][6]}}>
+            <a href="update/0206">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][7]}}>
+            <a href="update/0207">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][8]}}>
+            <a href="update/0208">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[2][9]}}>
+            <a href="update/0209">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>4.0</th>
+        <td class={{colour_matrix[3][0]}}>
+            <a href="update/0300">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][1]}}>
+            <a href="update/0301">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][2]}}>
+            <a href="update/0302">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][3]}}>
+            <a href="update/0303">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][4]}}>
+            <a href="update/0304">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][5]}}>
+            <a href="update/0305">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][6]}}>
+            <a href="update/0306">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][7]}}>
+            <a href="update/0307">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][8]}}>
+            <a href="update/0308">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[3][9]}}>
+            <a href="update/0309">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>5.0</th>
+        <td class={{colour_matrix[4][0]}}>
+            <a href="update/0400">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][1]}}>
+            <a href="update/0401">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][2]}}>
+            <a href="update/0402">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][3]}}>
+            <a href="update/0403">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][4]}}>
+            <a href="update/0404">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][5]}}>
+            <a href="update/0405">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][6]}}>
+            <a href="update/0406">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][7]}}>
+            <a href="update/0407">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][8]}}>
+            <a href="update/0408">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[4][9]}}>
+            <a href="update/0409">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>6.0</th>
+        <td class={{colour_matrix[5][0]}}>
+            <a href="update/0500">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][1]}}>
+            <a href="update/0501">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][2]}}>
+            <a href="update/0502">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][3]}}>
+            <a href="update/0503">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][4]}}>
+            <a href="update/0504">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][5]}}>
+            <a href="update/0505">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][6]}}>
+            <a href="update/0506">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][7]}}>
+            <a href="update/0507">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][8]}}>
+            <a href="update/0508">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[5][9]}}>
+            <a href="update/0509">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>7.0</th>
+        <td class={{colour_matrix[6][0]}}>
+            <a href="update/0600">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][1]}}>
+            <a href="update/0601">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][2]}}>
+            <a href="update/0602">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][3]}}>
+            <a href="update/0603">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][4]}}>
+            <a href="update/0604">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][5]}}>
+            <a href="update/0605">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][6]}}>
+            <a href="update/0606">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][7]}}>
+            <a href="update/0607">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][8]}}>
+            <a href="update/0608">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[6][9]}}>
+            <a href="update/0609">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>8.0</th>
+        <td class={{colour_matrix[7][0]}}>
+            <a href="update/0700">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][1]}}>
+            <a href="update/0701">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][2]}}>
+            <a href="update/0702">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][3]}}>
+            <a href="update/0703">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][4]}}>
+            <a href="update/0704">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][5]}}>
+            <a href="update/0705">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][6]}}>
+            <a href="update/0706">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][7]}}>
+            <a href="update/0707">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][8]}}>
+            <a href="update/0708">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[7][9]}}>
+            <a href="update/0709">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>9.0</th>
+        <td class={{colour_matrix[8][0]}}>
+            <a href="update/0800">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][1]}}>
+            <a href="update/0801">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][2]}}>
+            <a href="update/0802">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][3]}}>
+            <a href="update/0803">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][4]}}>
+            <a href="update/0804">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][5]}}>
+            <a href="update/0805">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][6]}}>
+            <a href="update/0806">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][7]}}>
+            <a href="update/0807">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][8]}}>
+            <a href="update/0808">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[8][9]}}>
+            <a href="update/0809">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>10.0</th>
+        <td class={{colour_matrix[9][0]}}>
+            <a href="update/0900">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][1]}}>
+            <a href="update/0901">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][2]}}>
+            <a href="update/0902">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][3]}}>
+            <a href="update/0903">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][4]}}>
+            <a href="update/0904">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][5]}}>
+            <a href="update/0905">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][6]}}>
+            <a href="update/0906">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][7]}}>
+            <a href="update/0907">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][8]}}>
+            <a href="update/0908">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+        <td class={{colour_matrix[9][9]}}>
+            <a href="update/0909">
+                <div style="height:100%;width:100%">
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+
+
+    </tr>
+
+    </tbody>
+
+
+
+
+
+    <h5></h5>
+
+
+</table>
+
+
+
+
+
+</div>
+
+<div class ="links">
+
+    <a href="/AddTables">continue and add your tables -> </a>
+
+
+</div>
+</html>

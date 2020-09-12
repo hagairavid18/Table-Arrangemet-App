@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="=ie=edge">
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+    <title>Step 1 : add your tables</title>
+    <style type="text/css">
+        body, html {
+            height: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .bg-image {
+            /* The image used */
+            background-image: url("../static/top-view-empty-restaurant-tables-with-realistic-design_23-2147921053.jpg");
+
+            /* Add the blur effect */
+            filter: blur(8px);
+            -webkit-filter: blur(2px);
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Position text in the middle of the page/image */
+        .bg-text {
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+            color: white;
+            font-weight: bold;
+            border: 3px solid #f1f1f1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            padding: 20px;
+            text-align: center;
+        }
+        .links{
+            position: absolute;
+            top: 97%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            padding: 20px;
+
+        }
+        a:link, a:visited {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+             text-decoration: none;
+             display: inline-block;
+        }
+
+a:hover, a:active {
+  background-color: red;
+}
+
+    </style>
+    <!--//Link to an external style sheet:-->
+</head>
+
+<div class="bg-image"></div>
+<div class="bg-text">
+    {% if tables|length < 1 %}
+    <h4> There are no tasks, create one below!</h4>
+    {% else %}
+
+    <table style="text-align: center">
+        <tr>
+            <th>table id</th>
+            <th>table width:</th>
+            <th>table length</th>
+            <th>actions</th>
+        </tr>
+        {% for table in tables %}
+
+        <tr>
+            <td>{{ table.id }}</td>
+            <td>{{ table.table_width }}</td>
+            <td>{{table.table_length}}</td>
+            <td>
+                <a href="/delete/{{table.id}}">Delete</a>
+                <br>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+    </table>
+    {% endif %}
+    <h2>add a new table</h2>
+    <form action="{{ url_for('add_tables') }}" method="post">
+        <!-- form on the curr page ('/'), do the method ' 'add_tables post which add row to TO do table  -->
+        <label for="table_width">choose table width:</label>
+        <select id="table_width" name="table_width">
+            <option value="0.6">0.6</option>
+            <option value="0.8">0.8</option>
+            <option value="1.0">1.0</option>
+            <option value="1.2">1.2</option>
+            <option value="1.4">1.4</option>
+            <option value="1.6">1.6</option>
+            <option value="1.8">1.8</option>
+            <option value="2.0">2.0</option>
+        </select>
+        <br>
+        <label for="table_length">choose table length :</label>
+
+        <select id="table_length" name="table_length">
+            <option value="0.6">0.6</option>
+            <option value="0.8">0.8</option>
+            <option value="1.0">1.0</option>
+            <option value="1.2">1.2</option>
+            <option value="1.4">1.4</option>
+            <option value="1.6">1.6</option>
+            <option value="1.8">1.8</option>
+            <option value="2.0">2.0</option>
+        </select>
+        <br>
+        <h4>*size in meters</h4>
+
+        <input type="submit" value="Add this Table"><!--create a a buton called add task -->
+    </form>
+    <br>
+    <br>
+
+
+    <a href="/result">find out the best arrangement!</a>
+
+
+</div>
+<div class ="links">
+
+<a href="/ChooseDimensions" >back</a>
+
+
+</div>
+
+</html>
