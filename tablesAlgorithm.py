@@ -368,7 +368,7 @@ def create_image(best_board, best_distance):
     # create a new image
     plt.figure(2)
 
-    plt.text(1, len(best_board) + 2, 'the distance between the closest tables is ' + str(best_distance) + 'm')
+    #plt.text(1, len(best_board) + 2, 'the distance between the closest tables is ' + str(best_distance) + 'm')
 
     # remove boundaris
     plt.box(on=None)
