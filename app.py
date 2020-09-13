@@ -16,6 +16,12 @@ db = SQLAlchemy(app)
 
 # initializing matrix represents the restaurant
 colour_matrix = numpy.empty([10, 10], dtype="<U10")
+for i in range(10):
+    for j in range(10):
+        if i < 4 and j < 4:
+            colour_matrix[i][j] = "light"
+        else:
+            colour_matrix[i][j] = "dark"
 
 
 # to add a new table:
@@ -34,13 +40,6 @@ class Tables(db.Model):  # create model
 # home page
 @app.route('/')
 def index():
-    for i in range(10):
-        for j in range(10):
-            if i < 4 and j < 4:
-                colour_matrix[i][j] = "light"
-            else:
-                colour_matrix[i][j] = "dark"
-
     return render_template('index.html')
 
 
@@ -150,9 +149,9 @@ def impossible():
 @app.after_request
 def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    r.headers["Pragma"] = "no-cache"
-    r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
+    # r.headers["Pragma"] = "no-cache"
+    # r.headers["Expires"] = "0"
+    # r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
 
