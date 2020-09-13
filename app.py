@@ -18,7 +18,6 @@ db = SQLAlchemy(app)
 colour_matrix = numpy.empty([10, 10], dtype="<U10")
 
 
-
 # to add a new table:
 # 1 type python
 # 2 from app import db
@@ -150,8 +149,8 @@ def impossible():
 @app.after_request
 def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    # r.headers["Pragma"] = "no-cache"
-    # r.headers["Expires"] = "0"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
     # r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
