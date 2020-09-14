@@ -1,6 +1,6 @@
 # Table-Arrangemet-App
 
-----a video of the app is atached-----
+----a video of the app ("Demo") is atached-----
 
 an  self developed app designed for restaurants, in order to help them with the Covid-19 limitations of distances between dinners. The user's inpus is a skech of 
 his restaurant and the tables he want to locate, and the output is the safest arrangement of the tables in his restaurant.
