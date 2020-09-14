@@ -93,7 +93,6 @@ def choose_dimensions():
                     colour_matrix[k][m] = "light"
                 else:
                     colour_matrix[k][m] = "dark"
-    print('het')
     return render_template('ChooseDimensions.html', colour_matrix=colour_matrix)
 
 

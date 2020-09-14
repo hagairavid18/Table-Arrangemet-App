@@ -30,17 +30,25 @@ best_distance: int
 """
 
 
+def shuffle_tables_dimensions(tables_list):
+    for i in range(len(tables_list)):
+        tables_list[i].shuffle()
+
+    pass
+
+
 def tables_arrangement_algorithm(tables_list, restaurant_matrix):
     # initialize essential parameters
     init_avail_pts, res_length, res_width = create_all_points(restaurant_matrix)
     best_distance = -1
-    best_board = np.zeros((res_length + 4, res_length + 4))
+    best_board = np.zeros((res_length , res_length ))
 
     # main loop of the function
-    for _ in range(decide_num_of_iter(len(tables_list), res_length, res_width)):
-        board = np.zeros((res_length + 4, res_width + 4))
+    for i in range(decide_num_of_iter(len(tables_list), res_length, res_width)):
+        shuffle_tables_dimensions(tables_list)
+        board = np.zeros((res_length , res_width ))
         remain_pts = init_avail_pts.copy()
-        curr_distance = add_tables(board, best_distance, tables_list, remain_pts)
+        curr_distance = add_tables(board, best_distance, tables_list, remain_pts, i)
 
         # in case the last run gave a better solution
         if curr_distance > best_distance:
@@ -81,7 +89,7 @@ min_distance: int
 """
 
 
-def add_tables(board, best_distance, tables, rem_pts):
+def add_tables(board, best_distance, tables, rem_pts, try_num):
     min_distance = np.inf
 
     for i in range(len(tables)):
@@ -94,7 +102,7 @@ def add_tables(board, best_distance, tables, rem_pts):
             return -1
 
         # finding the best spot to locate next table:
-        best_spot_distance, best_spot_coordinate = calculate_distances_center(possibleSpots, tables[i], tables)
+        best_spot_distance, best_spot_coordinate = calculate_distances_center(possibleSpots, tables[i], tables, try_num)
 
         # update curr minimal distance between all tables:
         min_distance = min(best_spot_distance, min_distance)
@@ -138,8 +146,8 @@ def locate_table(table, rem_points, board, x, y):
                 next_point = rem_points.pop(rem_points.index((i, j, 0)))
 
                 # assure this spot is indeed available
-                if board[next_point[0] + 2][next_point[1] + 2] == 0:
-                    board[next_point[0] + 2][next_point[1] + 2] = table.table_number
+                if board[next_point[0]][next_point[1]] == 0:
+                    board[next_point[0]][next_point[1]] = table.table_number
                 else:
                     return True
             else:
@@ -175,7 +183,16 @@ def find_potential_spots(table, rem_pts):
                 (rem_pts[i][0] + table.length - 1, rem_pts[i][1], 0) in rem_pts) and (
                 (rem_pts[i][0], rem_pts[i][1] + table.width - 1, 0) in rem_pts) and (
                 (rem_pts[i][0] + table.length - 1, rem_pts[i][1] + table.width - 1, 0) in rem_pts) and (
-                (rem_pts[i][0] + int(table.length / 2), rem_pts[i][1] + int(table.width / 1), 0) in rem_pts):
+                (rem_pts[i][0] + int(table.length / 2), rem_pts[i][1] + int(table.width / 2), 0) in rem_pts) and(
+                (rem_pts[i][0] + int(table.length / 2), rem_pts[i][1] - 2, 0) in rem_pts) and (
+                (rem_pts[i][0] + int(table.length / 2), rem_pts[i][1] + table.width + 1, 0) in rem_pts) and (
+                (rem_pts[i][0] - 2, rem_pts[i][1] + int(table.width / 2), 0) in rem_pts) and (
+                (rem_pts[i][0] + table.length + 1 , rem_pts[i][1] + int(table.width / 2), 0) in rem_pts) and (
+                (rem_pts[i][0] - 2, rem_pts[i][1] - 2, 0) in rem_pts) and (
+                (rem_pts[i][0] + table.length + 1, rem_pts[i][1] + table.width + 1, 0) in rem_pts) and (
+                (rem_pts[i][0] + table.length + 1, rem_pts[i][1] - 2, 0) in rem_pts)and (
+                (rem_pts[i][0] - 2, rem_pts[i][1] + table.width + 1, 0) in rem_pts):
+
             possible_spots.append(rem_pts[i])
     return possible_spots
 
@@ -204,9 +221,11 @@ bull
 """
 
 
-def calculate_distances_center(potential_spots, table, tables_list):
+def calculate_distances_center(potential_spots, table, tables_list, try_num):
     # special case for the first table: return a random available spot
     if table.table_number == 1:
+        if try_num == 0:
+            return np.inf, (potential_spots[0][0], potential_spots[0][1])
         n = np.random.randint(0, len(potential_spots) - 1)
         return np.inf, (potential_spots[n][0], potential_spots[n][1])
 
@@ -231,11 +250,13 @@ def calculate_distances_center(potential_spots, table, tables_list):
 
 
 # a non useful function right now, more precise than the previews one but takes too long to calculate
-def calculate_distances(possible_spots, selected_points, table):
+def calculate_distances(possible_spots, selected_points, table, try_num):
     global_min_distance = 0
     global_min_distance_coordinate = (-1, -1)
 
     if table.table_number == 1:
+        if try_num == 0 :
+            return np.inf, (possible_spots[0][0], possible_spots[0][1])
         n = np.random.randint(0, len(possible_spots) - 1)
 
         return np.inf, (possible_spots[n][0], possible_spots[n][1])
@@ -305,15 +326,15 @@ def create_all_points(initial_matrix):
 # the choice of how many depends on the number of tables and the size of the restaurant
 def decide_num_of_iter(num_of_tables, res_length, res_width):
     if num_of_tables == 3:
-        return min(200, 2 * res_width * res_length)
+        return min(250, 2 * res_width * res_length)
     elif num_of_tables == 4:
-        return min(100, 2 * res_width * res_length)
+        return min(80, 2 * res_width * res_length)
     elif num_of_tables == 5:
         return min(50, 2 * res_width * res_length)
     if num_of_tables == 6:
-        return min(20, 2 * res_width * res_length)
+        return min(30, 2 * res_width * res_length)
     else:
-        return 10
+        return 50
 
 
 # change colour of points that shouldn't be in the restaurant
@@ -321,46 +342,7 @@ def add_non_res_points(init_avail_pts, res_length, res_width, best_board, num):
     for i in range(res_length):
         for j in range(res_width):
             if (i, j, 0) not in init_avail_pts:
-                best_board[i + 2][j + 2] = num
-                if i == 0:
-                    best_board[i][j + 2] = num
-                    best_board[i + 1][j + 2] = num
-
-                if j == 0:
-                    best_board[i + 2][j] = num
-                    best_board[i + 2][j + 1] = num
-
-                if i + 5 == len(best_board):
-                    best_board[i + 3][j + 2] = num
-                    best_board[i + 4][j + 2] = num
-
-                if j + 5 == len(best_board[0]):
-                    best_board[i + 2][j + 3] = num
-                    best_board[i + 2][j + 4] = num
-
-                if i == 0 and j + 5 == len(best_board[0]):
-                    best_board[i][j + 3] = num
-                    best_board[i][j + 4] = num
-                    best_board[i + 1][j + 3] = num
-                    best_board[i + 1][j + 4] = num
-
-                if i == 0 and j == 0:
-                    best_board[i][j] = num
-                    best_board[i][j + 1] = num
-                    best_board[i + 1][j] = num
-                    best_board[i + 1][j + 1] = num
-
-                if i + 5 == len(best_board) and j + 5 == len(best_board[0]):
-                    best_board[i + 3][j + 3] = num
-                    best_board[i + 3][j + 4] = num
-                    best_board[i + 4][j + 3] = num
-                    best_board[i + 4][j + 4] = num
-
-                if i + 5 == len(best_board) and j == 0:
-                    best_board[i + 3][j] = num
-                    best_board[i + 3][j + 1] = num
-                    best_board[i + 4][j] = num
-                    best_board[i + 4][j + 1] = num
+                best_board[i][j] = num
 
 
 # in charge of create a image of the restaurant and save it
