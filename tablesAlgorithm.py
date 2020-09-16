@@ -245,21 +245,21 @@ def rect_distance(i1a, j1a, i2a, j2a, i1b, j1b, i2b, j2b):
     bottom = i1b > i2a
     top = i1a > i2b
     if top and left:
-        return distance(i1a, j1a, i2b, j2b)
+        return distance(i1a, j1a, i2b + 1, j2b + 1)
     elif left and bottom:
-        return distance(i2a, j1a, i1b, j2b)
+        return distance(i2a + 1, j1a, i1b, j2b + 1)
     elif bottom and right:
-        return distance(i2a, j2a, i1b, j1b)
+        return distance(i2a + 1, j2a + 1, i1b, j1b)
     elif right and top:
-        return distance(i1a, j2a, i2b, j1b)
+        return distance(i1a, j2a + 1, i2b + 1, j1b)
     elif left:
-        return j1a - j2b
+        return j1a - j2b - 1
     elif right:
-        return j1b - j2a
+        return j1b - j2a - 1
     elif bottom:
-        return i1b - i2a
+        return i1b - i2a - 1
     elif top:
-        return i1a - i2b
+        return i1a - i2b -1
     else:  # rectangles intersect
         return 0.
 
@@ -318,17 +318,17 @@ def create_init_board(initial_matrix, tables):
 # the choice of how many depends on the number of tables and the size of the restaurant
 def decide_num_of_iter(num_of_tables, res_length, res_width):
     if num_of_tables == 2:
-        return min(40, 2 * res_width * res_length)
+        return min(50, 2 * res_width * res_length)
     if num_of_tables == 3:
-        return min(30, 2 * res_width * res_length)
+        return min(50, 2 * res_width * res_length)
     elif num_of_tables == 4:
-        return min(20, 2 * res_width * res_length)
+        return min(40, 2 * res_width * res_length)
     elif num_of_tables == 5:
-        return min(15, 2 * res_width * res_length)
+        return min(25, 2 * res_width * res_length)
     if num_of_tables == 6:
-        return min(10, 2 * res_width * res_length)
+        return min(20, 2 * res_width * res_length)
     else:
-        return 5
+        return 15
 
 
 # in charge of create a image of the restaurant and save it
@@ -336,7 +336,7 @@ def create_image(best_board, global_min):
     # create a new image
     plt.figure(2)
 
-    plt.text(1, len(best_board) + 2, 'the distance between the closest tables is ' + str(global_min) + 'm')
+    plt.text(1, len(best_board) + 2, 'the distance between the closest tables is ' + str(round(global_min, 2)) + 'm')
 
     # remove boundaries
     plt.box(on=None)
@@ -446,10 +446,9 @@ def dis_from_other_tables(table, i, j, tables_list, check_until):
     for p in range(check_until):
         if p + 1 != table.table_number:
 
-            curr_dis = rect_distance(i, j, i + table.length - 1, j + table.length - 1, tables_list[p].location[0],
+            curr_dis = rect_distance(i, j, i + table.length - 1, j + table.width - 1, tables_list[p].location[0],
                                      tables_list[p].location[1], tables_list[p].location[0] + tables_list[p].length - 1,
                                      tables_list[p].location[1] + tables_list[p].width - 1)
-
             if curr_dis < dis_from_closest_table:
                 dis_from_closest_table = curr_dis
     return dis_from_closest_table
@@ -490,7 +489,7 @@ def update_tables_location(board, tables_list):
         tables_list[i].min_distance = 0
 
 
-# avital procedure before every iteration of the main loop
+# a vital procedure before every iteration of the main loop
 def init_tables(tables_list):
     for i in range(len(tables_list)):
         tables_list[i].location = (-1, -1)
@@ -505,5 +504,6 @@ def update_global_distance(tables_list):
         temp = dis_from_other_tables(table, table.location[0], table.location[1], tables_list,
                                      len(tables_list))
         min_dis = np.min((min_dis, temp))
+
 
     return min_dis
